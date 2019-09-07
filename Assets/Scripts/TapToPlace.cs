@@ -25,7 +25,13 @@ public class TapToPlace : MonoBehaviour
         UpdatePlacementPose();
         UpdatePlacementIndicator();
 
-        if (placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        bool tapped = false;
+        tapped = Input.GetMouseButton(0);
+
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            tapped = true;
+
+        if (placementPoseIsValid && tapped)
         {
             PlaceObject();
         }
@@ -58,6 +64,7 @@ public class TapToPlace : MonoBehaviour
         placementPoseIsValid = hits.Count > 0;
         if (placementPoseIsValid)
         {
+            print("hit");
             placementPose = hits[0].pose;
 
             var cameraForward = Camera.main.transform.forward;
